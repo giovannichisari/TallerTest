@@ -1,0 +1,38 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Guess the Car Price!</h1>
+
+    <table style="display:inline-block">
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Doors</th>
+            <th>Color</th>
+            <th>Price?</th>
+        </tr>
+        @foreach (var item in Model.gCars)
+        {
+            <tr>
+                <td>@item.Make</td>
+                <td>@item.Model</td>
+                <td>@item.Year</td>
+                <td>@item.Doors</td>
+                <td style="background-color:@item.Color">@item.Color</td>
+                <td>
+                    <form method="post" asp-page-handler="Guess">
+                        <input type="hidden" name="pCarId" value="@item.Id" />
+                        <input type="number" name="pGuessValue" value="" />
+                        <button>Guess</button>
+                    </form>
+                </td>
+                <td style="background-color:green; display: @(item.Guessed ? "block" : "none") ">Great Job!</td>
+            </tr>
+        }
+    </table>
+</div>
